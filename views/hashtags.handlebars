@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Администрирование</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <a class="nav-link" href="/posts">Посты</a>
+      <a class="nav-link" href="/hashtags">Хэштеги</a>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2>Управление ботом</h2>
+  <form method="post">
+    <div class="form-group">
+
+      {{#if botStatus}}
+        <button type="submit" name="stopBot" value="true" class="btn btn-danger">Остановить бота</button>
+      {{/if}}
+
+      {{#unless botStatus}}
+        <button type="submit" name="startBot" value="true" class="btn btn-success">Запустить бота</button>
+      {{/unless}}
+    </div>
+  </form>
+</div>
+
+<div class="container mt-4">
+  <h2>Управление хэштегами</h2>
+  <form method="post">
+    <div class="form-group">
+      <label for="hashtag">Хэштег:</label>
+      <input type="text" class="form-control" id="hashtag" name="hashtag" />
+    </div>
+    <div class="form-group">
+      <button type="submit" name="addHashtag" value="true" class="btn btn-primary">Добавить хэштег</button>
+      <button type="submit" name="removeHashtag" value="true" class="btn btn-danger">Удалить хэштег</button>
+    </div>
+  </form>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Хэштег</th>
+        <th>Удалить хэштег</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each hashtags}}
+        <tr>
+          <td>{{this}}</td>
+          <td>
+            <form method="post">
+              <input type="hidden" name="hashtag" value="{{this}}" />
+              <button type="submit" name="removeHashtag" value="true" class="btn btn-danger">Удалить</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

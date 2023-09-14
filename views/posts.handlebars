@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Администрирование</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <a class="nav-link" href="/posts">Посты</a>
+      <a class="nav-link" href="/hashtags">Хэштеги</a>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2>Управление ботом</h2>
+  <form method="post">
+    <div class="form-group">
+
+      {{#if botStatus}}
+        <button type="submit" name="stopBot" value="true" class="btn btn-danger">Остановить бота</button>
+      {{/if}}
+
+      {{#unless botStatus}}
+        <button type="submit" name="startBot" value="true" class="btn btn-success">Запустить бота</button>
+      {{/unless}}
+    </div>
+  </form>
+</div>
+
+<div class="container mt-4">
+  <h2>Управление постами</h2>
+  <table class="table">
+    <tbody>
+      {{#each posts}}
+        <tr>
+          <td style="display: flex; flex-direction: column;">
+            {{text}}
+            <br />
+
+            {{#each photos}}
+              <img src="{{this}}" alt="photo" />
+              <br />
+            {{/each}}
+
+            {{#each videos}}
+              <iframe src="{{this}}" height="300" width="500" style="margin-top: 10px;"></iframe>
+              <br />
+            {{/each}}
+          </td>
+
+          <td>
+            <form method="post">
+              <input type="hidden" name="postId" value="{{postId}}" />
+
+              {{#if isVisible}}
+                <button type="submit" class="btn btn-danger">Скрыть</button>
+              {{/if}}
+
+              {{#unless isVisible}}
+                <button type="submit" class="btn btn-success">Показать</button>
+              {{/unless}}
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
