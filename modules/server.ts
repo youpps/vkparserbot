@@ -47,6 +47,41 @@ class ServerModule {
       }
     });
 
+    app.all("/posts/moderated", async (req, res) => {
+      try {
+        const { postId, stopBot, startBot } = req.body;
+
+        if (postId) {
+          await Posts.changeVisibility(postId);
+        }
+
+        if (stopBot) {
+          await State.changeState({
+            isActive: false,
+          });
+        }
+
+        if (startBot) {
+          await State.changeState({
+            isActive: true,
+          });
+        }
+
+        const posts = await Posts.getPosts();
+
+        const correctPosts = posts.filter((post) => post.isVisible);
+
+        const { isActive } = await State.getState();
+
+        res.status(200).render("moderated", {
+          botStatus: isActive,
+          posts: correctPosts,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
     app.all("/hashtags", async (req, res) => {
       try {
         const { hashtag, addHashtag, removeHashtag, stopBot, startBot } = req.body;
