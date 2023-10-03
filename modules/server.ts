@@ -1,5 +1,6 @@
 import path from "path";
 import express from "express";
+import cors from "cors";
 import { engine } from "express-handlebars";
 import State from "../utils/stateConfig";
 import { IServerConfig } from "../utils/serverConfig";
@@ -14,6 +15,7 @@ class ServerModule {
     app.set("view engine", "handlebars");
     app.set("views", path.resolve(__dirname, "../views"));
     app.use(express.urlencoded({ extended: true }));
+    app.use(cors());
 
     app.all("/posts", async (req, res) => {
       try {
